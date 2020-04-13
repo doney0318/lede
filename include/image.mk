@@ -157,13 +157,18 @@ endif
 
 
 # Disable noisy checks by default as in upstream
-DTC_FLAGS += \
-  -Wno-unit_address_vs_reg \
-  -Wno-simple_bus_reg \
-  -Wno-unit_address_format \
-  -Wno-pci_bridge \
-  -Wno-pci_device_bus_num \
-  -Wno-pci_device_reg
+ifeq ($(strip $(call kernel_patchver_ge,4.7.0)),1)
+  DTC_FLAGS += -Wno-unit_address_vs_reg
+endif
+ifeq ($(strip $(call kernel_patchver_ge,4.12.0)),1)
+  DTC_FLAGS += \
+	-Wno-unit_address_vs_reg \
+	-Wno-simple_bus_reg \
+	-Wno-unit_address_format \
+	-Wno-pci_bridge \
+	-Wno-pci_device_bus_num \
+	-Wno-pci_device_reg
+endif
 ifeq ($(strip $(call kernel_patchver_ge,4.17.0)),1)
   DTC_FLAGS += \
 	-Wno-avoid_unnecessary_addr_size \
@@ -588,7 +593,7 @@ define Device/Build/image
 		DEVICE_ALT2_VARIANT="$(DEVICE_ALT2_VARIANT)" \
 		DEVICE_TITLE="$(DEVICE_TITLE)" \
 		TARGET="$(BOARD)" \
-		SUBTARGET="$(if $(SUBTARGET),$(SUBTARGET),generic)" \
+		SUBTARGET="$(SUBTARGET)" \
 		VERSION_NUMBER="$(VERSION_NUMBER)" \
 		VERSION_CODE="$(VERSION_CODE)" \
 		SUPPORTED_DEVICES="$(SUPPORTED_DEVICES)" \

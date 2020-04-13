@@ -146,7 +146,6 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 define Kernel/CompileImage/Initramfs
 	$(call Kernel/Configure/Initramfs)
 	$(CP) $(GENERIC_PLATFORM_DIR)/other-files/init $(TARGET_DIR)/init
-	$(if $(SOURCE_DATE_EPOCH),touch -hcd "@$(SOURCE_DATE_EPOCH)" $(TARGET_DIR)/init)
 	rm -rf $(KERNEL_BUILD_DIR)/linux-$(LINUX_VERSION)/usr/initramfs_data.cpio*
 	+$(KERNEL_MAKE) $(if $(KERNELNAME),$(KERNELNAME),all) modules
 	$(call Kernel/CopyImage,-initramfs)
@@ -161,5 +160,3 @@ define Kernel/Clean/Default
 	rm -f $(LINUX_KERNEL)
 	$(_SINGLE)$(MAKE) -C $(KERNEL_BUILD_DIR)/linux-$(LINUX_VERSION) clean
 endef
-
-

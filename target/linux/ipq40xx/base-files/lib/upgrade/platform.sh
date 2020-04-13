@@ -162,7 +162,6 @@ platform_do_upgrade() {
 	8dev,jalapeno)
 		nand_do_upgrade "$ARGV"
 		;;
-	mobipromo,cm520-79f |\
 	p2w,r619ac|\
 	p2w,r619ac-128m)
 		nand_do_upgrade "$1"

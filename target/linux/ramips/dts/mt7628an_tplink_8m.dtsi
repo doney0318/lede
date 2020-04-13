@@ -1,8 +1,5 @@
 #include "mt7628an.dtsi"
 
-#include <dt-bindings/input/input.h>
-#include <dt-bindings/gpio/gpio.h>
-
 / {
 	chosen {
 		bootargs = "console=ttyS0,115200";
@@ -69,4 +66,5 @@
 
 &ethernet {
 	mtd-mac-address = <&factory 0xf100>;
+	mediatek,portmap = "llllw";
 };
